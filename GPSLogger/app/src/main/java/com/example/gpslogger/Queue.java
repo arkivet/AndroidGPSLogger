@@ -1,9 +1,9 @@
 package com.example.gpslogger;
 
-/**
- * Created by Alex on 2015-10-07.
- */
-public class Queue
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+
+public class Queue extends AppCompatActivity
 {
     private class Node{
         public GPSData data;
@@ -29,6 +29,8 @@ public class Queue
         current = null;
         walker = null;
         size = 0;
+        Intent intent = new Intent(getApplicationContext(), GPSHandler.class);
+        startActivity(intent);
     }
 
     public void clearQueue(){
