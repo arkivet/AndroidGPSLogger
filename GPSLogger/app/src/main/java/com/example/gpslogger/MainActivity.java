@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             enableGPS(false);
         }
 
+        gpsHandler.getJSONDataString();
 
 
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -313,6 +314,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             if(gpsHandler.getClicked() == 0) {
                 gpsHandler.addData(location.getLongitude(), location.getLatitude(), location.getAltitude(),
                         location.getAccuracy(), location.getSpeed(), activity, confidence, sessionID, time);
+            }
+            if(gpsHandler.getJSONDataString() != "") {
                 new NetworkConnection(getApplicationContext(), gpsHandler).execute();
             }
         }

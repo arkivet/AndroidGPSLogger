@@ -3,13 +3,15 @@ package com.example.gpslogger;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class GPSHandler extends AppCompatActivity{
-    private Queue queue;
+    private ArrayList<GPSData> dataList;
     private GPSData data;
     private int clicked;
 
     public void GPSHandler(){
-        queue = new Queue();
+        dataList = new ArrayList<GPSData>();
         data = new GPSData();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -18,8 +20,7 @@ public class GPSHandler extends AppCompatActivity{
     public void addData(double longitude, double latitude, double altitude, float accuracy,
             float speed, String activity, int confidence, int sessionID, String time){
         data = new GPSData(longitude, latitude, altitude, accuracy, speed, activity, confidence, sessionID, time);
-        //queue.enQueue(data);
-
+        dataList.add(data);
     }
 
     public void setClicked(int clicked){
@@ -29,16 +30,14 @@ public class GPSHandler extends AppCompatActivity{
     public int getClicked() {
         return this.clicked;
     }
-    public String getJSONData(){
-        return data.toJSON();
+    public String getJSONDataString(){
+        String returnData = "";
+        if(dataList != null){
+            returnData = dataList.get(0).toJSON();
+        }
+        return returnData;
     }
 }
-
-/*
-Idé för detta är att istället för att spara objekten i en länkad lista i Queue
-Så tar jag informationen, konverterar den till JSON och lägger JSON objekten i en arraylist
-Listan skickar jag med till nätverksdelen för att kunna extrahera objekten och skicka iväg dem till servern
- */
 
 
 

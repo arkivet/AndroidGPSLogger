@@ -48,7 +48,7 @@ public class NotificationHandler extends AppCompatActivity {
                 break;
             case 2:
                 notification = new Notification.Builder(context.getApplicationContext())
-                        .setSmallIcon(null).build();
+                        .setPriority(Notification.PRIORITY_MIN).build();
                 break;
         }
         notification.flags = Notification.FLAG_ONGOING_EVENT;

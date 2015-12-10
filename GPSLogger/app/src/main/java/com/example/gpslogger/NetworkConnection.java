@@ -38,7 +38,7 @@ public class NetworkConnection extends AsyncTask<Void, Void, Void>
     protected Void doInBackground(Void... params) {
         if(hasConnection()) {
             try {
-                data = gpsHandler.getJSONData();
+                data = gpsHandler.getJSONDataString();
                 System.out.println(data);
                 socket = new Socket("46.101.51.19", 8899);
                 System.out.println("Connected to server");
