@@ -16,7 +16,8 @@ public class NetworkConnection extends AsyncTask<Void, Void, Void>
     private Context context;
     private Socket socket;
     private OutputStream dataOut;
-    private String data;
+    private GPSData data;
+    private String dataString;
 
     public NetworkConnection(Context context, GPSHandler gpsHandler){
         this.context = context;
@@ -38,17 +39,19 @@ public class NetworkConnection extends AsyncTask<Void, Void, Void>
     protected Void doInBackground(Void... params) {
         if(hasConnection()) {
             try {
-                data = gpsHandler.getJSONDataString();
-                System.out.println(data);
+                data = gpsHandler.getGPSData();
                 socket = new Socket("46.101.51.19", 8899);
                 System.out.println("Connected to server");
+                dataString = gpsHandler.getJSONDataString(data);
+                System.out.println(dataString);
                 dataOut = new DataOutputStream(socket.getOutputStream());
-                dataOut.write(data.getBytes());
+                dataOut.write(dataString.getBytes());
                 dataOut.flush();
                 socket.close();
                 System.out.println("Socket sent!");
             } catch (IOException e) {
                 e.printStackTrace();
+                gpsHandler.addData(data);
             }
         } else{
             System.out.println("No active connection");
