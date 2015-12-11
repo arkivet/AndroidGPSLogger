@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             enableGPS(false);
         }
 
-        gpsHandler.getJSONDataString();
-
-
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
                 .addConnectionCallbacks(this)
@@ -167,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     SystemClock.setCurrentTimeMillis(timePassed);
                     chrono.setBase(SystemClock.elapsedRealtime() - timePassed);
                     chrono.start();
-
                     break;
                 case 1:
                     loggingStatusText.setText("Logging Off");
@@ -315,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 gpsHandler.addData(location.getLongitude(), location.getLatitude(), location.getAltitude(),
                         location.getAccuracy(), location.getSpeed(), activity, confidence, sessionID, time);
             }
-            if(gpsHandler.getJSONDataString() != "") {
+            if(!gpsHandler.listIsEmpty()) {
                 new NetworkConnection(getApplicationContext(), gpsHandler).execute();
             }
         }

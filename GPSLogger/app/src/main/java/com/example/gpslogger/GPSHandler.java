@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GPSHandler extends AppCompatActivity{
-    private ArrayList<GPSData> dataList;
+    private List<GPSData> dataList = new ArrayList<GPSData>();
     private GPSData data;
     private int clicked;
 
     public void GPSHandler(){
-        dataList = new ArrayList<GPSData>();
         data = new GPSData();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -23,6 +23,10 @@ public class GPSHandler extends AppCompatActivity{
         dataList.add(data);
     }
 
+    public void addData(GPSData dataObject){
+        dataList.add(dataObject);
+    }
+
     public void setClicked(int clicked){
         this.clicked = clicked;
     }
@@ -30,11 +34,24 @@ public class GPSHandler extends AppCompatActivity{
     public int getClicked() {
         return this.clicked;
     }
-    public String getJSONDataString(){
-        String returnData = "";
-        if(dataList != null){
-            returnData = dataList.get(0).toJSON();
+
+    public boolean listIsEmpty() {
+        return dataList.isEmpty();
+    }
+
+    public GPSData getGPSData() {
+        GPSData tempData = null;
+        if(!dataList.isEmpty()) {
+            tempData = dataList.get(0);
+            dataList.remove(0);
         }
+        return tempData;
+    }
+
+    public String getJSONDataString(GPSData data){
+        String returnData;
+        returnData = data.toJSON();
+        System.out.println(dataList.size());
         return returnData;
     }
 }
